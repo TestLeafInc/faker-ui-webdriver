@@ -10,6 +10,13 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import config.ConfigurationManager;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+
 import cucumber.api.testng.AbstractTestNGCucumberTests;
 
 public class DriverInstance  extends AbstractTestNGCucumberTests{
@@ -25,29 +32,25 @@ public class DriverInstance  extends AbstractTestNGCucumberTests{
 		return wait.get();
 	}
 
-	public void setDriver(String browser, boolean headless) {		
-		switch (browser) {
-		case "chrome":
-			ChromeOptions chrome_options = new ChromeOptions();
-			chrome_options.addArguments("--disable-notifications"); 
-			chrome_options.addArguments("--no-sandbox");
-			chrome_options.addArguments("--disable-dev-shm-usage");
-			//System.setProperty("webdriver.chrome.driver", "/Users/babu/Desktop/webdriver/115/chromedriver-mac-x64/chromedriver");
-			//chrome_options.setBinary("/Users/babu/Desktop/webdriver/115/chrome-mac-x64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing");
-			remoteWebdriver.set(new ChromeDriver(chrome_options));
-			break;
-		case "firefox":
-			FirefoxOptions firefox_options = new FirefoxOptions();
-			firefox_options.addArguments("--no-sandbox");
-			firefox_options.addArguments("--disable-dev-shm-usage"); 
-			remoteWebdriver.set(new FirefoxDriver(firefox_options));
-			break;
-		case "msedge":
-			remoteWebdriver.set(new EdgeDriver());
-		default:
-			break;
-		}
+	public void setDriver(String browser, boolean headless) throws MalformedURLException {		
+	    DesiredCapabilities capabilities = new DesiredCapabilities();
+
+	    switch (browser) {
+	        case "chrome":
+	            capabilities.setBrowserName("chrome");
+	            break;
+	        case "firefox":
+	            capabilities.setBrowserName("firefox");
+	            break;
+	        case "msedge":
+	            capabilities.setBrowserName("MicrosoftEdge");
+	            break;
+	        default:
+	            break;
+	    }
+	    remoteWebdriver.set(new RemoteWebDriver(new URL("http://"+ConfigurationManager.configuration().seleniumHub()+":"+ConfigurationManager.configuration().hubPort()+"/wd/hub"), capabilities));
 	}
+	
 	public RemoteWebDriver getDriver() {
 		return remoteWebdriver.get();
 	}

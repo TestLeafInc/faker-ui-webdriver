@@ -42,14 +42,21 @@ public interface Configuration extends Config {
 
 	@Key("url.base")
 	String baseUrl();
-	
+
 	@Key("app.username")
 	String appUserName();
 
 	@Key("app.password")
 	String appPassword();
 
-	 @Key("faker.locale")
-	 String faker();
+	@Key("selenium.hub")
+	String seleniumHub();
+
+	@Key("hub.port")
+	String hubPort();
+
+
+	@Key("faker.locale")
+	String faker();
 
 }
