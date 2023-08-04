@@ -29,8 +29,8 @@ public class DriverInstance  extends AbstractTestNGCucumberTests{
 		switch (browser) {
 		case "chrome":
 			ChromeOptions chrome_options = new ChromeOptions();
-			chrome_options.addArguments("--start-maximized"); 
 			chrome_options.addArguments("--disable-notifications"); 
+			chrome_options.addArguments("--no-sandbox");
 			chrome_options.addArguments("--disable-dev-shm-usage");
 			//System.setProperty("webdriver.chrome.driver", "/Users/babu/Desktop/webdriver/115/chromedriver-mac-x64/chromedriver");
 			//chrome_options.setBinary("/Users/babu/Desktop/webdriver/115/chrome-mac-x64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing");
